@@ -1,0 +1,20 @@
+{:duct.profile/base
+ {:duct.core/project-ns scrambling-service
+
+  :duct.router/cascading [#ig/ref [:scrambling-service.handler/core]]
+
+  :scrambling-service.handler/core {}}
+
+ :duct.profile/dev   #duct/include "dev"
+ :duct.profile/local #duct/include "local"
+ :duct.profile/prod  {}
+
+ :duct.module/logging {}
+ :duct.module.web/api
+ {}
+ :duct.module.web/site
+ {}
+ :duct.module/cljs
+ {:main scrambling-service.client.client}
+ :duct.middleware.web/defaults
+ {:security {:anti-forgery false}}}

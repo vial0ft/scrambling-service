@@ -1,0 +1,42 @@
+div[class="description"] p {
+    text-align: center;
+}
+
+div[class="strings"] {
+    margin-top: 10px;
+    text-align: center;
+}
+
+div[class="strings"] input[type="text"] {
+    margin-left: 10px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+    width: 75%;
+}
+
+div[class="buttons"] {
+    margin-top: 10px;
+    text-align: center;
+}
+
+div[class="buttons"] button {
+    margin: 5px;
+    text-align: center;
+}
+
+div[class="result"] p {
+    text-align: center;
+}
+
+div[class="result"] p span {
+    margin-left: 10px;
+}
+
+
+div[class="error"] {
+    height: 15px;
+}
+
+
