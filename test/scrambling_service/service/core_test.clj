@@ -9,5 +9,5 @@
     (is (true? (sc/scramble? "abrakadaba" ""))))
 
   (testing "false scrambled"
-    (is (true? (sc/scramble? "katas" "steak")))
-    (is (true? (sc/scramble? "" "steak")))))
+    (is (false? (sc/scramble? "katas" "steak")))
+    (is (false? (sc/scramble? "" "steak")))))
