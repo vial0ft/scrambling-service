@@ -37,6 +37,7 @@ div[class="result"] p span {
 
 div[class="error"] {
     height: 15px;
+    text-align: center;
 }
 
 

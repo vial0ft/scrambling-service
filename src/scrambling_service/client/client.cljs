@@ -50,15 +50,18 @@
      {:class "strings"
       :name "scrambling"
       :lable "str1"
-      :on-change #(re/dispatch [:strings/change :scrambling %])}]
+      :on-change #(re/dispatch [:strings/change :scrambling %])
+      :error @(subscribe [:strings/error :scrambling])}]
     [LabledField
      {:class "strings"
       :name "word"
       :lable "str2"
-      :on-change #(re/dispatch [:strings/change :word %])}]
+      :on-change #(re/dispatch [:strings/change :word %])
+      :error @(subscribe [:strings/error :word])}]
+
     [:div.buttons
      [:button {:type :submit} "Check"]
-     [:button {:on-click (re/dispatch [:clean])
+     [:button {:on-click #(re/dispatch [:clean])
                :type :reset} "Clear"]]]])
 
 (defn Result [result]
@@ -67,12 +70,17 @@
      [:p [:strong "Result: "] [:span (str result)]]
      ]))
 
+(defn State []
+  [:div (str @(subscribe [:state]))])
+
 (defn MainPage []
   [:<>
    [:h1 {:style {:margin-top "5%"}} "Scramble?"]
    [Description]
    [ScrambleForm]
-   [Result @(subscribe [:result])]])
+   [Result @(subscribe [:result])]
+   [State]
+   ])
 
 
 

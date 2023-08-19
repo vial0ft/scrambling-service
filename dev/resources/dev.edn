@@ -1,1 +1,2 @@
-{}
+{:duct.middleware.web/defaults
+ {:security {:anti-forgery false}}}

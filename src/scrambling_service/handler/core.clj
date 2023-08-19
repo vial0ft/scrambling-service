@@ -7,11 +7,10 @@
 
 
 
-(defn handler [{:keys [body]}]
+(defn handler [{:keys [body-params]}]
   {:status 200
    :headers {"Content-Type" "application/json"}
-   :body {:result (service/scramble? (:scrambled body) (:word body))}})
-
+   :body {:result (service/scramble? (:scrambling body-params) (:word body-params))}})
 
 
 

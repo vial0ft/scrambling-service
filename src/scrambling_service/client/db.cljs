@@ -4,4 +4,5 @@
                                            :error ""}
                               :word {:value ""
                                      :error ""}}
-                    :result nil})
+                    :result nil
+                    :error nil})

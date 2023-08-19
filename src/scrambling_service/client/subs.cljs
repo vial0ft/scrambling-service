@@ -11,5 +11,7 @@
 (reg-sub :strings-values (fn [{:keys [strings]}]
                            (into {} (map (fn [[k v]] [k (:value v)]) strings))))
 
+(reg-sub :state (fn [db _] db))
+
 (reg-sub :result (fn [{:keys [result]}] result))
 

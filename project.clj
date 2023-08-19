@@ -9,7 +9,8 @@
                  [duct/module.web "0.7.3"]
                  [ring/ring-json "0.5.1"]
                  [cljs-ajax "0.8.4"]
-                 [re-frame "1.3.0"]]
+                 [re-frame "1.3.0"]
+                 [metosin/spec-tools "0.10.5"]]
   :plugins [[duct/lein-duct "0.12.3"]]
   :main ^:skip-aot scrambling-service.main
   :resource-paths ["resources" "target/resources"]
