@@ -1,7 +1,7 @@
 version: '3'
 services:
   scramble-service:
-    image: vial0ft/scramble:latest
+    image: vial0ft/scramble:main
     container_name: scramble-service
     environment:
       - PORT=5000
