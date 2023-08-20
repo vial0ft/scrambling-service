@@ -1,17 +1,11 @@
 (ns scrambling-service.spec.core
-  (:require [clojure.spec.alpha :as s]
-            [spec-tools.spec :as spec]))
+  (:require #?(:clj [clojure.spec.alpha :as s] :cljs [cljs.spec.alpha :as s])))
 
 
 (s/def ::a-z   #(re-matches #"^.*[a-z]" %))
 
-(s/def ::scambling-request (s/keys :req [::letters ::word]))
+(s/def ::scambling-request (s/map-of #{:letters :word} ::a-z))
 
 
-(defn validation-strings [strings]
-  (->> strings
-       (map (fn [[str-k str-v]]
-              (if (s/valid? ::a-z str-v) nil
-                [str-k "Only lower case letters will be used (a-z). No punctuation or digits will be included."])))
-       (filter #(not (nil? %)))
-       (into {})))
+(defn validation [value spec]
+   (s/valid? spec value))

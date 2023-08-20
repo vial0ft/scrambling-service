@@ -7,7 +7,9 @@
 
  :duct.profile/dev   #duct/include "dev"
  :duct.profile/local #duct/include "local"
- :duct.profile/prod  {}
+ :duct.profile/prod  {:duct.middleware.web/defaults
+                      {:security {:anti-forgery false}}
+                      :duct.server.http/jetty {:port #duct/env [PORT Int]}}
 
  :duct.module/logging {}
  :duct.module.web/api
@@ -15,5 +17,4 @@
  :duct.module.web/site
  {}
  :duct.module/cljs
- {:main scrambling-service.client.client}
- }
+ {:main scrambling-service.client.client}}

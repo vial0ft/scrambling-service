@@ -5,7 +5,7 @@
 (reg-event-db :initialize-db
               (fn [_ _] db/default-state))
 
-(reg-event-db :strings/change
+(reg-event-db :args/change
               (fn [db [_ field value]] (assoc-in db [:args field :value] value)))
 
 (reg-event-db :result

@@ -1,6 +1,6 @@
 # scrambling-service
 
-FIXME: description
+Scramble service
 
 ## Developing
 

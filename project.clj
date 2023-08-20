@@ -1,8 +1,7 @@
 (defproject scrambling-service "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "Scramble service"
   :min-lein-version "2.0.0"
-  :dependencies [[org.clojure/clojure "1.10.3"]
+  :dependencies [[org.clojure/clojure "1.11.1.1182"]
                  [duct/core "0.8.0"]
                  [duct/module.cljs "0.4.1"]
                  [duct/module.logging "0.5.0"]

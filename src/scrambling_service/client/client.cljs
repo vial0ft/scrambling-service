@@ -1,6 +1,5 @@
 (ns scrambling-service.client.client
-  (:require [ajax.core :refer [GET POST]]
-            [reagent.core :as r]
+  (:require [reagent.core :as r]
             [reagent.dom :as d]
             [scrambling-service.client.events]
             [scrambling-service.client.effects]
@@ -9,9 +8,7 @@
 
 
 (defn- on-change-wrapper [on-change]
-  (fn [e]
-    "catch on-change"
-    (on-change (.-value (.-target e)))))
+  (fn [e] (on-change (.-value (.-target e)))))
 
 (defn Description []
   [:div.description
@@ -27,13 +24,13 @@
   (fn [err-msg]
     [:div.error (when err-msg [:span {:style {:color "red"}} err-msg])]))
 
-(defn LabledField [{:keys [key class on-change error]}]
-  (fn [{:keys [key class lable input error]}]
+(defn LabledField [{:keys [class name lable on-change error]}]
+  (fn [{:keys [class name lable on-change error]}]
     [:div
      [:div {:class class}
-      [:label {:for key} lable]
+      [:label {:for name} lable]
       [:input
-       {:name key
+       {:name name
         :type "text"
         :on-change (on-change-wrapper on-change)}]]
      [Error error]]))
@@ -50,14 +47,14 @@
      {:class "strings"
       :name "letters"
       :lable "letters"
-      :on-change #(re/dispatch [:strings/change :letters %])
-      :error @(subscribe [:strings/error :letters])}]
+      :on-change #(re/dispatch [:args/change :letters %])
+      :error @(subscribe [:args/error :letters])}]
     [LabledField
      {:class "strings"
       :name "word"
       :lable "word"
-      :on-change #(re/dispatch [:strings/change :word %])
-      :error @(subscribe [:strings/error :word])}]
+      :on-change #(re/dispatch [:args/change :word %])
+      :error @(subscribe [:args/error :word])}]
 
     [:div.buttons
      [:button {:type :submit} "Check"]
@@ -70,19 +67,13 @@
      [:p [:strong "Result: "] [:span (str result)]]
      ]))
 
-(defn State []
-  [:div (str @(subscribe [:state]))])
-
 (defn MainPage []
   [:<>
    [:h1 {:style {:margin-top "5%"}} "Scramble?"]
    [Description]
    [ScrambleForm]
-   [Result @(subscribe [:result])]
-   [State]
+   [Result @(subscribe [:response/result])]
    ])
-
-
 
 (do
   (re/dispatch-sync [:initialize-db])

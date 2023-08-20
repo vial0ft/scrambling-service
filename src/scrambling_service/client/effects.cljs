@@ -3,8 +3,12 @@
             [scrambling-service.spec.core :as spec]
             [re-frame.core :as re  :refer [reg-cofx reg-fx reg-event-fx inject-cofx]]))
 
-(defn- strings [{:keys [strings]}]
-  (into {} (map (fn [[k v]] [k (:value v)]) strings)))
+(defn- request-args [{:keys [args]}]
+  (into {} (map (fn [[k v]] [k (:value v)]) args)))
+
+(defn- validate-arg [[arg-k arg-v]]
+  (if (spec/validation arg-v :scrambling-service.spec.core/a-z) nil
+      [arg-k "Only lower case letters will be used (a-z). No punctuation or digits will be included."]))
 
 (reg-fx :api/scramble-check
         (fn [body]
@@ -16,17 +20,21 @@
 (reg-event-fx :clean (fn [_ _] {:dispatch [:initialize-db]}))
 
 (reg-cofx :validate (fn [cofx _]
-                      (assoc cofx :validation-errors (-> (:db cofx)
-                                                         strings
-                                                         spec/validation-strings))))
+                      (let [r-args (request-args (:db cofx))
+                            validated-args (->> r-args
+                                                (map validate-arg)
+                                                (filter #(not (nil? %)))
+                                                (into {}))]
+                        (assoc cofx :validation-errors validated-args))))
 
 (reg-event-fx :set-error (fn [{:keys [db]} [_ field error]]
+                           (println field error)
                            {:db (assoc-in db [:args field :error] error)}))
 
 (reg-event-fx :scramble-check (inject-cofx :validate)
-              (fn [{:keys [db validation-errors]} _]
+              (fn [{:keys [db validation-errors]} _ ]
                 (if-not (empty? validation-errors)
                   {:dispatch-n (->> (keys (:args db))
                                     (map (fn [str-k] [:set-error str-k (get validation-errors str-k "")])))}
                   {:dispatch-n (map (fn [str] [:set-error str ""]) (keys (:args db)))
-                   :api/scramble-check (strings db)})))
+                   :api/scramble-check (request-args db)})))
