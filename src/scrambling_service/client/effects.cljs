@@ -15,17 +15,18 @@
 
 (reg-event-fx :clean (fn [_ _] {:dispatch [:initialize-db]}))
 
-
-
 (reg-cofx :validate (fn [cofx _]
-                      (assoc cofx :validation-errors (-> (get-in cofx [:db :strings])
-                                                        spec/validation-strings))))
+                      (assoc cofx :validation-errors (-> (:db cofx)
+                                                         strings
+                                                         spec/validation-strings))))
+
+(reg-event-fx :set-error (fn [{:keys [db]} [_ field error]]
+                           {:db (assoc-in db [:args field :error] error)}))
 
 (reg-event-fx :scramble-check (inject-cofx :validate)
               (fn [{:keys [db validation-errors]} _]
                 (if-not (empty? validation-errors)
-                  {:db (update-in db [:strings]
-                                  #(reduce (fn [acc [field error]]
-                                             (assoc-in acc [field :error] error)) % validation-errors))}
-                  {:db db
+                  {:dispatch-n (->> (keys (:args db))
+                                    (map (fn [str-k] [:set-error str-k (get validation-errors str-k "")])))}
+                  {:dispatch-n (map (fn [str] [:set-error str ""]) (keys (:args db)))
                    :api/scramble-check (strings db)})))

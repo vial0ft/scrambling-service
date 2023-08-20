@@ -16,7 +16,7 @@
 (defn Description []
   [:div.description
    [:p
-    [:u "(scramble? str1 str2)"] " returns " [:strong "true"] " if a portion of " [:i "str1"] " characters can be rearranged to match " [:i "str2"] " , otherwise returns " [:strong "false"]]
+    [:u "(scramble? letters word)"] " returns " [:strong "true"] " if a portion of " [:i "letters"] " characters can be rearranged to match " [:i "word"] " , otherwise returns " [:strong "false"]]
    [:p
     [:strong "Note:"] " Only lower case letters will be used (a-z). No punctuation or digits will be included."]
    [:p
@@ -48,14 +48,14 @@
    [:form {:on-submit (on-submit-form)}
     [LabledField
      {:class "strings"
-      :name "scrambling"
-      :lable "str1"
-      :on-change #(re/dispatch [:strings/change :scrambling %])
-      :error @(subscribe [:strings/error :scrambling])}]
+      :name "letters"
+      :lable "letters"
+      :on-change #(re/dispatch [:strings/change :letters %])
+      :error @(subscribe [:strings/error :letters])}]
     [LabledField
      {:class "strings"
       :name "word"
-      :lable "str2"
+      :lable "word"
       :on-change #(re/dispatch [:strings/change :word %])
       :error @(subscribe [:strings/error :word])}]
 
