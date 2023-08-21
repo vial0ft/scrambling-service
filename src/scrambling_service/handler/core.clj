@@ -8,7 +8,7 @@
             [ring.util.response :as resp]))
 
 (defn handler [{:keys [body-params]}]
-  (-> (if (s/validation body-params :scrambling-service.spec.core/scambling-request)
+  (-> (if (s/validation body-params :scrambling-service.spec.core/scrambling-request)
                    (resp/response {:result (scramble? (:letters body-params) (:word body-params))})
                    (resp/bad-request {:error "Request requires `letters` and `word` string fields which contains only `a-z` letters"}))
     (resp/content-type "application/json")))

@@ -1,7 +1,7 @@
 (ns scrambling-service.service.core)
 
-(defn scramble? [scrambling word]
-  (if (> (count word) (count scrambling)) false
-      (let [scrambling-map (frequencies scrambling)]
+(defn scramble? [letters word]
+  (if (> (count word) (count letters)) false
+      (let [letters-map (frequencies letters)]
         (->> (frequencies word)
-             (every? (fn [[l c]] (<= c (get scrambling-map l 0))))))))
+             (every? (fn [[l c]] (<= c (get letters-map l 0))))))))
